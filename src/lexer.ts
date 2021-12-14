@@ -1,5 +1,5 @@
-import { Token, TokenType } from 'types/token'
-import { isDigit, isLetter, isWhiteSpace } from 'utils'
+import { Token, TokenType } from './types/token'
+import { isDigit, isLetter, isWhiteSpace } from './utils'
 
 export class Lexer {
   constructor(
