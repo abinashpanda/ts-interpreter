@@ -1,14 +1,17 @@
 {
   "name": "ts-interpreter",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.0.1",
+  "description": "interpreter built using typescript for Monkey language",
   "main": "index.js",
   "scripts": {
     "start": "ts-node src/index.ts",
     "format": "prettier --write src/**/*.ts",
     "test": "jest --watch"
   },
-  "keywords": [],
+  "keywords": [
+    "typescript",
+    "interpreter"
+  ],
   "author": "",
   "license": "ISC",
   "devDependencies": {
@@ -17,6 +20,7 @@
     "@types/jest": "^27.0.3",
     "@typescript-eslint/eslint-plugin": "^5.7.0",
     "@typescript-eslint/parser": "^5.7.0",
+    "cz-conventional-changelog": "^3.3.0",
     "eslint": "^7.32.0",
     "eslint-config-standard": "^16.0.3",
     "eslint-plugin-import": "^2.25.3",
@@ -26,5 +30,10 @@
     "prettier": "^2.5.1",
     "ts-node": "^10.4.0",
     "typescript": "^4.5.3"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
