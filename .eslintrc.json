@@ -18,6 +18,7 @@
     "no-unused-vars": "off",
     "@typescript-eslint/no-unused-vars": "error",
     "no-undef": "off",
-    "generator-star-spacing": "off"
+    "generator-star-spacing": "off",
+    "no-console": "warn"
   }
 }
