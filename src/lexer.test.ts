@@ -17,13 +17,15 @@ describe('lexer', () => {
       { tokenType: TokenType.EOF, literal: '' },
     ]
 
-    const nextToken = lexer.nextToken()
+    let nextToken = lexer.nextToken()
     let count = 0
-    for (const token of nextToken) {
-      expect(token.tokenType).not.toBe(TokenType.ILLEGAL)
-      expect(token).toEqual(output[count])
+    while (nextToken.tokenType !== TokenType.EOF) {
+      expect(nextToken.tokenType).not.toBe(TokenType.ILLEGAL)
+      expect(nextToken).toEqual(output[count])
+      nextToken = lexer.nextToken()
       count += 1
     }
+    expect(nextToken.tokenType).toBe(TokenType.EOF)
   })
 
   it('returns tokens correctly for simple source code', () => {
@@ -75,13 +77,15 @@ describe('lexer', () => {
       { tokenType: TokenType.EOF, literal: '' },
     ]
 
-    const nextToken = lexer.nextToken()
+    let nextToken = lexer.nextToken()
     let count = 0
-    for (const token of nextToken) {
-      expect(token.tokenType).not.toBe(TokenType.ILLEGAL)
-      expect(token).toEqual(output[count])
+    while (nextToken.tokenType !== TokenType.EOF) {
+      expect(nextToken.tokenType).not.toBe(TokenType.ILLEGAL)
+      expect(nextToken).toEqual(output[count])
+      nextToken = lexer.nextToken()
       count += 1
     }
+    expect(nextToken.tokenType).toBe(TokenType.EOF)
   })
 
   it('returns tokens correctly for source code with multiple operators', () => {
@@ -191,12 +195,14 @@ describe('lexer', () => {
       { tokenType: TokenType.EOF, literal: '' },
     ]
 
-    const nextToken = lexer.nextToken()
+    let nextToken = lexer.nextToken()
     let count = 0
-    for (const token of nextToken) {
-      expect(token.tokenType).not.toBe(TokenType.ILLEGAL)
-      expect(token).toEqual(output[count])
+    while (nextToken.tokenType !== TokenType.EOF) {
+      expect(nextToken.tokenType).not.toBe(TokenType.ILLEGAL)
+      expect(nextToken).toEqual(output[count])
+      nextToken = lexer.nextToken()
       count += 1
     }
+    expect(nextToken.tokenType).toBe(TokenType.EOF)
   })
 })

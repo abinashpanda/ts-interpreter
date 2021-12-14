@@ -98,133 +98,110 @@ export class Lexer {
    * Returns a generator containing the next token. The generator ends when
    * it encounters the end of the input.
    */
-  *nextToken(): Generator<Token> {
+  nextToken(): Token {
     this.skipWhitespace()
     this.readChar()
 
-    while (this.char !== null) {
-      switch (this.char) {
-        case '=': {
-          if (this.peekChar() === '=') {
-            this.readChar()
-            yield {
-              tokenType: TokenType.EQ,
-              literal: '==',
-            }
-            break
+    switch (this.char) {
+      case '=': {
+        if (this.peekChar() === '=') {
+          this.readChar()
+          return {
+            tokenType: TokenType.EQ,
+            literal: '==',
           }
-          yield { tokenType: TokenType.ASSIGN, literal: this.char }
-          break
         }
-
-        case '+': {
-          yield { tokenType: TokenType.PLUS, literal: this.char }
-          break
-        }
-
-        case '-': {
-          yield { tokenType: TokenType.MINUS, literal: this.char }
-          break
-        }
-
-        case '!': {
-          if (this.peekChar() === '=') {
-            this.readChar()
-            yield {
-              tokenType: TokenType.NOT_EQ,
-              literal: '!=',
-            }
-            break
-          }
-          yield { tokenType: TokenType.BANG, literal: this.char }
-          break
-        }
-
-        case '*': {
-          yield { tokenType: TokenType.ASTERISK, literal: this.char }
-          break
-        }
-
-        case '/': {
-          yield { tokenType: TokenType.SLASH, literal: this.char }
-          break
-        }
-
-        case '<': {
-          if (this.peekChar() === '=') {
-            this.readChar()
-            yield {
-              tokenType: TokenType.LT_EQ,
-              literal: '<=',
-            }
-            break
-          }
-          yield { tokenType: TokenType.LT, literal: this.char }
-          break
-        }
-
-        case '>': {
-          if (this.peekChar() === '=') {
-            this.readChar()
-            yield {
-              tokenType: TokenType.GT_EQ,
-              literal: '>=',
-            }
-            break
-          }
-          yield { tokenType: TokenType.GT, literal: this.char }
-          break
-        }
-
-        case '(': {
-          yield { tokenType: TokenType.LPAREN, literal: this.char }
-          break
-        }
-
-        case ')': {
-          yield { tokenType: TokenType.RPAREN, literal: this.char }
-          break
-        }
-
-        case '{': {
-          yield { tokenType: TokenType.LBRACE, literal: this.char }
-          break
-        }
-
-        case '}': {
-          yield { tokenType: TokenType.RBRACE, literal: this.char }
-          break
-        }
-
-        case ',': {
-          yield { tokenType: TokenType.COMMA, literal: this.char }
-          break
-        }
-
-        case ';': {
-          yield { tokenType: TokenType.SEMICOLON, literal: this.char }
-          break
-        }
-
-        default: {
-          if (isLetter(this.char)) {
-            yield this.getIdentifierToken()
-            break
-          }
-
-          if (isDigit(this.char)) {
-            yield this.getNumberToken()
-            break
-          }
-
-          yield { tokenType: TokenType.ILLEGAL, literal: this.char }
-        }
+        return { tokenType: TokenType.ASSIGN, literal: this.char }
       }
 
-      this.skipWhitespace()
-      this.readChar()
-    }
+      case '+': {
+        return { tokenType: TokenType.PLUS, literal: this.char }
+      }
 
-    yield { tokenType: TokenType.EOF, literal: '' }
+      case '-': {
+        return { tokenType: TokenType.MINUS, literal: this.char }
+      }
+
+      case '!': {
+        if (this.peekChar() === '=') {
+          this.readChar()
+          return {
+            tokenType: TokenType.NOT_EQ,
+            literal: '!=',
+          }
+        }
+        return { tokenType: TokenType.BANG, literal: this.char }
+      }
+
+      case '*': {
+        return { tokenType: TokenType.ASTERISK, literal: this.char }
+      }
+
+      case '/': {
+        return { tokenType: TokenType.SLASH, literal: this.char }
+      }
+
+      case '<': {
+        if (this.peekChar() === '=') {
+          this.readChar()
+          return {
+            tokenType: TokenType.LT_EQ,
+            literal: '<=',
+          }
+        }
+        return { tokenType: TokenType.LT, literal: this.char }
+      }
+
+      case '>': {
+        if (this.peekChar() === '=') {
+          this.readChar()
+          return {
+            tokenType: TokenType.GT_EQ,
+            literal: '>=',
+          }
+        }
+        return { tokenType: TokenType.GT, literal: this.char }
+      }
+
+      case '(': {
+        return { tokenType: TokenType.LPAREN, literal: this.char }
+      }
+
+      case ')': {
+        return { tokenType: TokenType.RPAREN, literal: this.char }
+      }
+
+      case '{': {
+        return { tokenType: TokenType.LBRACE, literal: this.char }
+      }
+
+      case '}': {
+        return { tokenType: TokenType.RBRACE, literal: this.char }
+      }
+
+      case ',': {
+        return { tokenType: TokenType.COMMA, literal: this.char }
+      }
+
+      case ';': {
+        return { tokenType: TokenType.SEMICOLON, literal: this.char }
+      }
+
+      case null: {
+        return { tokenType: TokenType.EOF, literal: '' }
+      }
+
+      default: {
+        if (isLetter(this.char)) {
+          return this.getIdentifierToken()
+        }
+
+        if (isDigit(this.char)) {
+          return this.getNumberToken()
+        }
+
+        return { tokenType: TokenType.ILLEGAL, literal: this.char }
+      }
+    }
   }
 }
