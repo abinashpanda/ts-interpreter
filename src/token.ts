@@ -42,7 +42,14 @@ export enum TokenType {
   RETURN = 'RETURN',
 }
 
-export type Token = {
-  tokenType: TokenType
-  literal: string
+export class Token {
+  constructor(private readonly _tokenType: TokenType, private readonly _literal: string) {}
+
+  public get tokenType(): TokenType {
+    return this._tokenType
+  }
+
+  public get literal(): string {
+    return this._literal
+  }
 }

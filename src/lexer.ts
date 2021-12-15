@@ -56,42 +56,42 @@ export class Lexer {
     const literal = this.readIdentifier()
     switch (literal) {
       case 'let': {
-        return { tokenType: TokenType.LET, literal }
+        return new Token(TokenType.LET, literal)
       }
 
       case 'fn': {
-        return { tokenType: TokenType.FUNCTION, literal }
+        return new Token(TokenType.FUNCTION, literal)
       }
 
       case 'true': {
-        return { tokenType: TokenType.TRUE, literal }
+        return new Token(TokenType.TRUE, literal)
       }
 
       case 'false': {
-        return { tokenType: TokenType.FALSE, literal }
+        return new Token(TokenType.FALSE, literal)
       }
 
       case 'if': {
-        return { tokenType: TokenType.IF, literal }
+        return new Token(TokenType.IF, literal)
       }
 
       case 'else': {
-        return { tokenType: TokenType.ELSE, literal }
+        return new Token(TokenType.ELSE, literal)
       }
 
       case 'return': {
-        return { tokenType: TokenType.RETURN, literal }
+        return new Token(TokenType.RETURN, literal)
       }
 
       default: {
-        return { tokenType: TokenType.IDENT, literal }
+        return new Token(TokenType.IDENT, literal)
       }
     }
   }
 
   private getNumberToken(): Token {
     const literal = this.readNumber()
-    return { tokenType: TokenType.INT, literal }
+    return new Token(TokenType.INT, literal)
   }
 
   /**
@@ -106,89 +106,77 @@ export class Lexer {
       case '=': {
         if (this.peekChar === '=') {
           this.readChar()
-          return {
-            tokenType: TokenType.EQ,
-            literal: '==',
-          }
+          return new Token(TokenType.EQ, '==')
         }
-        return { tokenType: TokenType.ASSIGN, literal: this.char }
+        return new Token(TokenType.ASSIGN, this.char)
       }
 
       case '+': {
-        return { tokenType: TokenType.PLUS, literal: this.char }
+        return new Token(TokenType.PLUS, this.char)
       }
 
       case '-': {
-        return { tokenType: TokenType.MINUS, literal: this.char }
+        return new Token(TokenType.MINUS, this.char)
       }
 
       case '!': {
         if (this.peekChar === '=') {
           this.readChar()
-          return {
-            tokenType: TokenType.NOT_EQ,
-            literal: '!=',
-          }
+          return new Token(TokenType.NOT_EQ, '!=')
         }
-        return { tokenType: TokenType.BANG, literal: this.char }
+        return new Token(TokenType.BANG, this.char)
       }
 
       case '*': {
-        return { tokenType: TokenType.ASTERISK, literal: this.char }
+        return new Token(TokenType.ASTERISK, this.char)
       }
 
       case '/': {
-        return { tokenType: TokenType.SLASH, literal: this.char }
+        return new Token(TokenType.SLASH, this.char)
       }
 
       case '<': {
         if (this.peekChar === '=') {
           this.readChar()
-          return {
-            tokenType: TokenType.LT_EQ,
-            literal: '<=',
-          }
+          return new Token(TokenType.LT_EQ, '<=')
         }
-        return { tokenType: TokenType.LT, literal: this.char }
+        return new Token(TokenType.LT, this.char)
       }
 
       case '>': {
         if (this.peekChar === '=') {
           this.readChar()
-          return {
-            tokenType: TokenType.GT_EQ,
-            literal: '>=',
-          }
+          return new Token(TokenType.GT_EQ, '>=')
         }
-        return { tokenType: TokenType.GT, literal: this.char }
+        return new Token(TokenType.GT, this.char)
       }
 
       case '(': {
-        return { tokenType: TokenType.LPAREN, literal: this.char }
+        return new Token(TokenType.LPAREN, this.char)
       }
 
       case ')': {
-        return { tokenType: TokenType.RPAREN, literal: this.char }
+        return new Token(TokenType.RPAREN, this.char)
       }
 
       case '{': {
-        return { tokenType: TokenType.LBRACE, literal: this.char }
+        return new Token(TokenType.LBRACE, this.char)
       }
 
       case '}': {
-        return { tokenType: TokenType.RBRACE, literal: this.char }
+        return new Token(TokenType.RBRACE, this.char)
       }
 
       case ',': {
-        return { tokenType: TokenType.COMMA, literal: this.char }
+        return new Token(TokenType.COMMA, this.char)
       }
 
       case ';': {
-        return { tokenType: TokenType.SEMICOLON, literal: this.char }
+        return new Token(TokenType.SEMICOLON, this.char)
       }
 
       case null: {
-        return { tokenType: TokenType.EOF, literal: '' }
+        return new Token(TokenType.EOF, '')
       }
 
       default: {
@@ -200,7 +188,7 @@ export class Lexer {
           return this.getNumberToken()
         }
 
-        return { tokenType: TokenType.ILLEGAL, literal: this.char }
+        return new Token(TokenType.ILLEGAL, this.char)
       }
     }
   }
