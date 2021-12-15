@@ -2,7 +2,7 @@ import * as readline from 'readline'
 import { stdin as input, stdout as output } from 'process'
 import chalk from 'chalk'
 import { Lexer } from './lexer'
-import { Token, TokenType } from './types/token'
+import { Token, TokenType } from './token'
 
 function question(rl: readline.Interface, question: string): Promise<string> {
   return new Promise((resolve) => rl.question(question, resolve))

@@ -1,5 +1,5 @@
 import { Lexer } from './lexer'
-import { Token, TokenType } from './types/token'
+import { Token, TokenType } from './token'
 
 describe('lexer', () => {
   it('returns next token correctly for single characters', () => {

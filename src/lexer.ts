@@ -1,4 +1,4 @@
-import { Token, TokenType } from './types/token'
+import { Token, TokenType } from './token'
 import { isDigit, isLetter, isWhiteSpace } from './utils'
 
 export class Lexer {
@@ -23,20 +23,20 @@ export class Lexer {
   /**
    * @returns the next character without consuming it
    */
-  private peekChar(): string {
+  private get peekChar(): string {
     return this.input[this.readPosition]
   }
 
   private skipWhitespace() {
     // consume the next character if it is a whitespace
-    while (isWhiteSpace(this.peekChar())) {
+    while (isWhiteSpace(this.peekChar)) {
       this.readChar()
     }
   }
 
   private readIdentifier() {
     const position = this.position
-    while (isLetter(this.peekChar())) {
+    while (isLetter(this.peekChar)) {
       this.readChar()
     }
     // position + 1 is meant to splice the string till that position
@@ -45,7 +45,7 @@ export class Lexer {
 
   private readNumber() {
     const position = this.position
-    while (isDigit(this.peekChar())) {
+    while (isDigit(this.peekChar)) {
       this.readChar()
     }
     // position + 1 is meant to splice the string till that position
@@ -104,7 +104,7 @@ export class Lexer {
 
     switch (this.char) {
       case '=': {
-        if (this.peekChar() === '=') {
+        if (this.peekChar === '=') {
           this.readChar()
           return {
             tokenType: TokenType.EQ,
@@ -123,7 +123,7 @@ export class Lexer {
       }
 
       case '!': {
-        if (this.peekChar() === '=') {
+        if (this.peekChar === '=') {
           this.readChar()
           return {
             tokenType: TokenType.NOT_EQ,
@@ -142,7 +142,7 @@ export class Lexer {
       }
 
       case '<': {
-        if (this.peekChar() === '=') {
+        if (this.peekChar === '=') {
           this.readChar()
           return {
             tokenType: TokenType.LT_EQ,
@@ -153,7 +153,7 @@ export class Lexer {
       }
 
       case '>': {
-        if (this.peekChar() === '=') {
+        if (this.peekChar === '=') {
           this.readChar()
           return {
             tokenType: TokenType.GT_EQ,
