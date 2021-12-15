@@ -1,8 +1,8 @@
 import { Parser } from './parser'
-import { LetStatement, Program } from './ast'
+import { LetStatement, Program, ReturnStatement } from './ast'
 
 describe('parser', () => {
-  describe('parses simple program correctly', () => {
+  describe('parses let statements correctly', () => {
     let parser: Parser
     let program: Program
 
@@ -14,10 +14,6 @@ describe('parser', () => {
 
       parser = new Parser(input)
       program = parser.parseProgram()
-    })
-
-    it('parses input correctly', () => {
-      expect(program).not.toBeNull()
     })
 
     it('parses statements correctly', () => {
@@ -43,7 +39,7 @@ describe('parser', () => {
     it('parses expressions correctly', () => {})
   })
 
-  describe('parses incorrect program and throws error', () => {
+  describe('parses incorrect let statements and throws error', () => {
     it('throws correct error', () => {
       const input = 'let = 10;'
       const parser = new Parser(input)
@@ -58,6 +54,25 @@ describe('parser', () => {
       expect(() => {
         parser.parseProgram()
       }).toThrowError("Expected '='. Got ==")
+    })
+  })
+
+  describe('parses return statements correctly', () => {
+    it('parses simple return statements correctly', () => {
+      const input = `return 5;
+      return 10;
+      return 993322;`
+      const parser = new Parser(input)
+
+      const program = parser.parseProgram()
+
+      const statements = program.statements
+      expect(statements.length).toBe(3)
+
+      for (const statement of statements) {
+        expect(statement).toBeInstanceOf(ReturnStatement)
+        expect(statement.tokenLiteral()).toBe('return')
+      }
     })
   })
 })

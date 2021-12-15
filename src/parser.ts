@@ -1,6 +1,6 @@
 import { Token, TokenType } from './token'
 import { Lexer } from './lexer'
-import { LetStatement, Program, Statement, Identifier } from './ast'
+import { LetStatement, Program, Statement, Identifier, Expression, ReturnStatement } from './ast'
 
 export class Parser {
   private currentToken: Token
@@ -45,6 +45,10 @@ export class Parser {
         return this.parseLetStatement()
       }
 
+      case TokenType.RETURN: {
+        return this.parseReturnStatement()
+      }
+
       default: {
         throw new Error(`Unexpected token: ${this.currentToken.tokenType}`)
       }
@@ -72,9 +76,23 @@ export class Parser {
       this.nextToken()
     }
 
-    const statement = new LetStatement(statementToken, name)
+    // @TODO: Add the parsed expression from above
+    return new LetStatement(statementToken, name, new Expression())
+  }
 
-    return statement
+  parseReturnStatement(): ReturnStatement {
+    const statementToken = this.currentToken
+
+    this.nextToken()
+
+    // @TODO: Parse expression
+    // Right now we are skipping the part till we reach the semicolon
+    while (this.currentToken.tokenType !== TokenType.SEMICOLON) {
+      this.nextToken()
+    }
+
+    // @TODO: Add the parsed expression from above
+    return new ReturnStatement(statementToken, new Expression())
   }
 
   parseProgram(): Program {
