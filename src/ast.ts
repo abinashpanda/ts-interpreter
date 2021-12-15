@@ -16,7 +16,7 @@ export class Expression implements Node {
   }
 }
 
-class Identifier implements Expression {
+export class Identifier implements Expression {
   constructor(private readonly token: Token, public value: string) {}
 
   public tokenLiteral(): string {
@@ -25,7 +25,8 @@ class Identifier implements Expression {
 }
 
 export class LetStatement implements Statement {
-  constructor(private readonly token: Token, public name: Identifier, public value: Expression) {}
+  // @TODO: Add value expresssion
+  constructor(private readonly token: Token, public name: Identifier) {}
 
   public tokenLiteral(): string {
     return this.token.literal

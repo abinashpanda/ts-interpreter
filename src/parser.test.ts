@@ -1,10 +1,8 @@
-import { Lexer } from './lexer'
 import { Parser } from './parser'
 import { LetStatement, Program } from './ast'
 
 describe('parser', () => {
   describe('parses simple program correctly', () => {
-    let lexer: Lexer
     let parser: Parser
     let program: Program
 
@@ -14,8 +12,7 @@ describe('parser', () => {
     let foobar = 838383;
     `
 
-      lexer = new Lexer(input)
-      parser = new Parser(lexer)
+      parser = new Parser(input)
       program = parser.parseProgram()
     })
 
@@ -44,5 +41,23 @@ describe('parser', () => {
     })
 
     it('parses expressions correctly', () => {})
+  })
+
+  describe('parses incorrect program and throws error', () => {
+    it('throws correct error', () => {
+      const input = 'let = 10;'
+      const parser = new Parser(input)
+      expect(() => {
+        parser.parseProgram()
+      }).toThrowError('Expected identifier. Got =')
+    })
+
+    it('throws correct error when = is replaced with ==', () => {
+      const input = 'let x == 10;'
+      const parser = new Parser(input)
+      expect(() => {
+        parser.parseProgram()
+      }).toThrowError("Expected '='. Got ==")
+    })
   })
 })
