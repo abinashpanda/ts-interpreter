@@ -1,5 +1,5 @@
 import { Parser } from './parser'
-import { LetStatement, Program, ReturnStatement } from './ast'
+import { ExpressionStatement, Identifier, IntegerLiteral, LetStatement, Program, ReturnStatement } from './ast'
 
 describe('parser', () => {
   describe('parses let statements correctly', () => {
@@ -73,6 +73,42 @@ describe('parser', () => {
         expect(statement).toBeInstanceOf(ReturnStatement)
         expect(statement.tokenLiteral()).toBe('return')
       }
+    })
+  })
+
+  describe('parses expressions correctly', () => {
+    it('parses identifier expression correctly', () => {
+      const input = 'foobar;'
+      const parser = new Parser(input)
+      const program = parser.parseProgram()
+
+      const statements = program.statements
+      expect(statements.length).toBe(1)
+
+      const expressionStatement = statements[0]
+      expect(expressionStatement).toBeInstanceOf(ExpressionStatement)
+
+      const expression = (<ExpressionStatement>expressionStatement).expression
+      expect(expression).toBeInstanceOf(Identifier)
+
+      const identifier = <Identifier>expression
+      expect(identifier.tokenLiteral()).toBe('foobar')
+      expect(identifier.value).toBe('foobar')
+    })
+
+    it('parses integer expression correctly', () => {
+      const input = '5;'
+      const parser = new Parser(input)
+      const program = parser.parseProgram()
+      const statements = program.statements
+
+      expect(statements[0]).toBeInstanceOf(ExpressionStatement)
+
+      const expressionStatement = <ExpressionStatement>statements[0]
+      expect(expressionStatement.expression).toBeInstanceOf(IntegerLiteral)
+      const expression = <IntegerLiteral>expressionStatement.expression
+      expect(expression.value).toBe(5)
+      expect(expression.tokenLiteral()).toBe('5')
     })
   })
 })

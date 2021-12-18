@@ -41,6 +41,22 @@ export class Identifier implements Expression {
   }
 }
 
+export class IntegerLiteral implements Expression {
+  constructor(private readonly token: Token, private readonly integerValue: number) {}
+
+  tokenLiteral(): string {
+    return this.token.literal
+  }
+
+  toString(): string {
+    return this.integerValue.toString()
+  }
+
+  public get value() {
+    return this.integerValue
+  }
+}
+
 export class LetStatement implements Statement {
   constructor(
     private readonly token: Token,
@@ -82,7 +98,11 @@ export class ReturnStatement implements Statement {
 }
 
 export class ExpressionStatement implements Statement {
-  constructor(private readonly token: Token, private readonly expression: Expression) {}
+  constructor(private readonly token: Token, private readonly valueExpression: Expression) {}
+
+  public get expression() {
+    return this.valueExpression
+  }
 
   tokenLiteral(): string {
     return this.token.literal
